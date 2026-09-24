@@ -23,7 +23,7 @@ public class SleepProcessor {
                 workerId + " started processing " + config.getNodeId()
         );
 
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
 
             /*
              * Get the next available element from the node.
@@ -35,16 +35,32 @@ public class SleepProcessor {
                     );
 
             /*
-             * If no element is returned,
-             * this worker has nothing else to process.
+             * If there is currently no element available,
+             * wait before checking the node again.
+             *
+             * This allows all node processors to remain
+             * running at the same time while waiting for
+             * elements from the previous node.
              */
             if (element == null) {
 
                 System.out.println(
-                        workerId + " has no more elements to process."
+                        workerId
+                                + " found no available element. "
+                                + "Waiting before trying again..."
                 );
 
-                break;
+                try {
+
+                    Thread.sleep(2000);
+
+                } catch (InterruptedException e) {
+
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+
+                continue;
             }
 
             /*
@@ -377,7 +393,11 @@ public class SleepProcessor {
 
             Thread.currentThread().interrupt();
 
-            System.err.println(workerId + " was interrupted while processing " + elementId);
+            System.err.println(
+                    workerId
+                            + " was interrupted while processing "
+                            + elementId
+            );
 
             return false;
         }
