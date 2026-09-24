@@ -9,6 +9,7 @@ public class BPOConnection {
     private static final String BPO_PORT = "8080";
     private static final String BPO_CONTEXT_ROOT = "BPO-5295-PROJECT";
     private final NodeOperationsRestRequest nodeOperations;
+
     public BPOConnection() {
         BpoConnector bpoConnector = new BpoConnector(BPO_DOMAIN, BPO_PORT, BPO_CONTEXT_ROOT);
         nodeOperations = new NodeOperationsRestRequest(bpoConnector);
