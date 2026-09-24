@@ -20,25 +20,24 @@
             <artifactId>bpo-rest-client</artifactId>
             <version>1.1.4</version>
         </dependency>
+        <dependency>
+            <groupId>com.svi.bpo</groupId>
+            <artifactId>bpo-entities</artifactId>
+            <version>1.1.4</version>
+        </dependency>
     </dependencies>
+
 
     <repositories>
         <repository>
             <id>central</id>
             <name>svi-repo</name>
-            <url>http://18.206.21.71:8081/artifactory/libs-release</url>
+            <url>https://artifactory.svi.cloud/artifactory/libs-release</url>
         </repository>
-
         <repository>
             <id>central-local</id>
             <name>svi-repo-local</name>
-            <url>http://18.206.21.71:8081/artifactory/libs-release-local</url>
-        </repository>
-
-        <repository>
-            <id>central-maven</id>
-            <name>central</name>
-            <url>https://repo1.maven.org/maven2/</url>
+            <url>https://artifactory.svi.cloud/artifactory/libs-release-local</url>
         </repository>
     </repositories>
 
@@ -68,6 +67,7 @@
             </plugin>
         </plugins>
     </build>
+
 
 
 

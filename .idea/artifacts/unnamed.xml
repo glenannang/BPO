@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="unnamed">
+    <output-path>$PROJECT_DIR$/out/artifacts/unnamed</output-path>
+    <root id="archive" name="unnamed.jar">
+      <element id="file-copy" path="$USER_HOME$/Downloads/bpo-rest-client-1.1.4 (1).jar" />
+    </root>
+  </artifact>
+</component>
