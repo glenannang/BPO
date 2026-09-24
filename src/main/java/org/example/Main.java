@@ -7,29 +7,71 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Config config =
-                new Config("node4.properties");
+        if (args.length == 0) {
+            System.err.println(
+                    "Please provide a configuration file."
+            );
+            System.err.println(
+                    "Example: java -jar BPO.jar node1.properties"
+            );
+            return;
+        }
+
+        String configFile = args[0];
+
+        Config config = new Config(configFile);
 
         SleepProcessor processor =
                 new SleepProcessor(config);
 
-        /*
-         * NODE4 has two assigned workers:
-         *
-         * Sleeper4-1
-         * Sleeper4-2
-         */
+        String[] workers =
+                getWorkers(config.getNodeId());
+
         ExecutorService executor =
-                Executors.newFixedThreadPool(2);
+                Executors.newFixedThreadPool(workers.length);
 
-        executor.submit(
-                () -> processor.processWorker("Sleeper4-1")
-        );
-
-        executor.submit(
-                () -> processor.processWorker("Sleeper4-2")
-        );
+        for (String worker : workers) {
+            executor.submit(
+                    () -> processor.processWorker(worker)
+            );
+        }
 
         executor.shutdown();
+    }
+
+    private static String[] getWorkers(String nodeId) {
+
+        return switch (nodeId.toUpperCase()) {
+
+            case "NODE1" ->
+                    new String[]{
+                            "Sleeper1-1",
+                            "Sleeper1-2"
+                    };
+
+            case "NODE2" ->
+                    new String[]{
+                            "Sleeper2-1",
+                            "Sleeper2-2",
+                            "Sleeper2-3"
+                    };
+
+            case "NODE3" ->
+                    new String[]{
+                            "Sleeper3-1",
+                            "Sleeper3-2"
+                    };
+
+            case "NODE4" ->
+                    new String[]{
+                            "Sleeper4-1",
+                            "Sleeper4-2"
+                    };
+
+            default ->
+                    throw new IllegalArgumentException(
+                            "Unsupported node: " + nodeId
+                    );
+        };
     }
 }
